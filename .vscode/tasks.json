@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build Raylib",
+            "label": "Build - Main Version",
             "type": "shell",
             "command": "C:/msys64/mingw64/bin/gcc.exe",
             "args": [
@@ -21,6 +21,9 @@
                 "-lgdi32",
                 "-lwinmm"
             ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -28,6 +31,66 @@
             "problemMatcher": [
                 "$gcc"
             ]
+        },
+        {
+            "label": "Build - GPT 5.6 Version",
+            "type": "shell",
+            "command": "C:/msys64/mingw64/bin/gcc.exe",
+            "args": [
+                "-Wall",
+                "-Wextra",
+                "-std=c17",
+                "gpt56solxhigh_oneshot.c",
+                "-o",
+                "gpt56solxhigh_oneshot.exe",
+                "-I",
+                "C:/msys64/mingw64/include",
+                "-L",
+                "C:/msys64/mingw64/lib",
+                "-lraylib",
+                "-lopengl32",
+                "-lgdi32",
+                "-lwinmm"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build",
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Run - Main Version",
+            "type": "shell",
+            "command": "${workspaceFolder}/main.exe",
+            "dependsOn": "Build - Main Version",
+            "dependsOrder": "sequence",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run - GPT 5.6 Version",
+            "type": "shell",
+            "command": "${workspaceFolder}/gpt56solxhigh_oneshot.exe",
+            "dependsOn": "Build - GPT 5.6 Version",
+            "dependsOrder": "sequence",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build Both Versions",
+            "dependsOn": [
+                "Build - Main Version",
+                "Build - GPT 5.6 Version"
+            ],
+            "dependsOrder": "sequence",
+            "group": "build",
+            "problemMatcher": []
         }
     ]
 }
